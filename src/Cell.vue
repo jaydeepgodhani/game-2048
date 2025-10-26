@@ -16,5 +16,3 @@ defineProps({
     <span v-if="value !== 0" class="text-3xl">{{ value }}</span>
   </span>
 </template>
-
-<style scoped></style>

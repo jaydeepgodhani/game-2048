@@ -18,5 +18,3 @@ function handleClick() {
     <div v-else>Please start the game</div>
   </div>
 </template>
-
-<style scoped></style>
