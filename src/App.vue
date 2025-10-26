@@ -10,11 +10,10 @@ function handleClick() {
 
 <template>
   <div class="flex items-center flex-col">
-    <h1 class="font-bold">You did it!</h1>
-    <button @click="handleClick" class="p-4 m-4 border-1">
-      {{ startClicked ? 'reset' : 'start' }}
+    <div v-if="startClicked" class="mb-16"><Board /></div>
+    <div v-else class="text-xl my-16">Please start the game</div>
+    <button @click="handleClick" class="py-2 px-8 m-4 border-2 rounded-full text-xl">
+      {{ startClicked ? 'Reset' : 'Start' }}
     </button>
-    <div v-if="startClicked"><Board /></div>
-    <div v-else>Please start the game</div>
   </div>
 </template>

@@ -29,7 +29,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="flex items-center flex-col">
-    <h1>Board</h1>
+    <h1 class="text-4xl my-16">2048</h1>
     <div v-for="row in grid" :key="row[0].id" class="flex flex-row justify-center">
       <Cell v-for="cell in row" :key="cell.id" :number="cell.id" :value="cell.value" />
     </div>
