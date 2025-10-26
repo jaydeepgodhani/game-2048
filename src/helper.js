@@ -1,9 +1,16 @@
-const testGrid = [
-  [2, 0, 2, 0, 0],
-  [2, 0, 0, 0, 0],
-  [0, 0, 2, 0, 2],
+const testGrid5 = [
+  [2, 4, 8, 16, 32],
+  [1024, 512, 256, 128, 64],
+  [2048, 0, 2, 0, 2],
   [2, 0, 2, 0, 4],
   [2, 0, 2, 0, 4],
+]
+
+const testGrid4 = [
+  [2, 4, 8, 16],
+  [512, 128, 64, 32],
+  [1024, 2048, 0, 0],
+  [0, 0, 0, 0],
 ]
 
 export function createGrid(size) {
@@ -12,7 +19,7 @@ export function createGrid(size) {
       row,
       col,
       id: row * size + col + 1,
-      value: testGrid[row][col],
+      value: 0,
     })),
   )
 }
@@ -164,4 +171,19 @@ export function calculateValues(key, size, grid) {
       break
   }
   return newGrid
+}
+
+export const colorMap = {
+  0: '#fff',
+  2: 'oklch(98.7% 0.026 102.212)',
+  4: 'oklch(97.3% 0.071 103.193)',
+  8: 'oklch(95.4% 0.038 75.164)',
+  16: 'oklch(93.6% 0.032 17.717)',
+  32: 'oklch(93.2% 0.032 255.585)',
+  64: 'oklch(95.3% 0.051 180.801)',
+  128: 'oklch(95.6% 0.045 203.388)',
+  256: 'oklch(95.1% 0.026 236.824)',
+  512: 'oklch(93.2% 0.032 255.585)',
+  1024: 'oklch(93% 0.034 272.788)',
+  2048: 'oklch(94.3% 0.029 294.588)',
 }

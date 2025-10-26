@@ -5,6 +5,7 @@ import { calculateValues, createGrid, getRandomEmptyCell } from './helper'
 
 const size = 4
 const grid = ref(createGrid(size))
+const lastGrid = ref()
 
 function keyboardListener(event, size) {
   // return error here, reset game with message
@@ -12,10 +13,24 @@ function keyboardListener(event, size) {
   // Prevent default action for arrow keys to avoid scrolling or other browser behaviors
   if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
     event.preventDefault()
-    grid.value = calculateValues(event.key, size, grid.value)
+    const calculatedGrid = calculateValues(event.key, size, grid.value)
+    lastGrid.value = grid.value
+    grid.value = calculatedGrid
     const emptyCell = getRandomEmptyCell(grid.value)
     grid.value[emptyCell.row][emptyCell.col].value = 2
   }
+
+  const isCtrlOrCmd = event.ctrlKey || event.metaKey
+  if (isCtrlOrCmd && event.key === 'z') {
+    event.preventDefault()
+    grid.value = lastGrid.value
+  }
+}
+
+function handleClick() {
+  const newGrid = createGrid(size)
+  grid.value = newGrid
+  lastGrid.value = newGrid
 }
 
 onMounted(() => {
@@ -32,6 +47,80 @@ onBeforeUnmount(() => {
     <h1 class="text-4xl my-16">2048</h1>
     <div v-for="row in grid" :key="row[0].id" class="flex flex-row justify-center">
       <Cell v-for="cell in row" :key="cell.id" :number="cell.id" :value="cell.value" />
+    </div>
+    <div class="mt-8">
+      <button @click="handleClick" class="py-2 px-8 m-4 border-2 rounded-full text-xl">
+        Reset
+      </button>
+    </div>
+    <div class="mt-8 text-xl flex flex-col items-center justify-center">
+      <div class="flex py-2">
+        Use Arrow keys &nbsp;
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="bg-gray-100 border-slate-300 border-2 rounded-lg size-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+          />
+        </svg>
+        &nbsp;
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="bg-gray-100 border-slate-300 border-2 rounded-lg size-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+          />
+        </svg>
+        &nbsp;
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="bg-gray-100 border-slate-300 border-2 rounded-lg size-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"
+          />
+        </svg>
+        &nbsp;
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="bg-gray-100 border-slate-300 border-2 rounded-lg size-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"
+          />
+        </svg>
+      </div>
+
+      <div>
+        <span class="bg-gray-100 border-slate-300 border-2 rounded-lg px-2">ctrl + z</span>
+        to undo
+      </div>
     </div>
   </div>
 </template>
