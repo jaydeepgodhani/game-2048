@@ -58,8 +58,10 @@ onBeforeUnmount(() => {
       </svg>
       &nbsp; 2048
     </h1>
-    <div v-for="row in grid" :key="row[0].id" class="flex flex-row justify-center">
-      <Cell v-for="cell in row" :key="cell.id" :number="cell.id" :value="cell.value" />
+    <div class="rounded-[24px] p-1 bg-slate-50 drop-shadow-lg/30">
+      <div v-for="row in grid" :key="row[0].id" class="flex flex-row justify-center">
+        <Cell v-for="cell in row" :key="cell.id" :number="cell.id" :value="cell.value" />
+      </div>
     </div>
     <div class="mt-8">
       <button

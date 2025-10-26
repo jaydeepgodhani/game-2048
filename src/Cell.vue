@@ -17,9 +17,13 @@ const selectedColor = computed(() => colorMap[props.value])
 
 <template>
   <span
-    class="w-[6rem] h-[6rem] border-2 flex items-center justify-center -ml-[2px] -mb-[2px]"
-    :style="{ backgroundColor: selectedColor }"
+    class="w-[6rem] h-[6rem] drop-shadow-sm/15 flex items-center justify-center transition duration-300 rounded-[16px] m-[4px]"
+    :style="{
+      backgroundColor: selectedColor,
+    }"
   >
-    <span v-if="props.value !== 0" class="text-3xl">{{ props.value }}</span>
+    <span v-if="props.value !== 0" class="text-3xl transition delay-200"
+      ><b>{{ props.value }}</b></span
+    >
   </span>
 </template>
