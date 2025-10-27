@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   value: {
-    type: Number,
+    type: String,
     required: false,
   },
 })
@@ -14,7 +14,7 @@ const props = defineProps({
     viewBox="0 0 24 24"
     stroke-width="1.5"
     stroke="currentColor"
-    class="bg-gray-100 border-slate-300 border-2 rounded-lg size-6"
+    class="bg-gray-100 border-2 rounded-xl w-full drop-shadow-sm/15"
   >
     <path stroke-linecap="round" stroke-linejoin="round" :d="props.value" />
   </svg>

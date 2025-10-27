@@ -8,17 +8,18 @@ const size = 4
 const grid = ref(createGrid(size))
 const lastGrid = ref()
 
+function refillGrid(event, size, gridValue) {
+  const calculatedGrid = calculateValues(event, size, gridValue)
+  lastGrid.value = gridValue
+  grid.value = calculatedGrid
+  const emptyCell = getRandomEmptyCell(gridValue)
+  grid.value[emptyCell.row][emptyCell.col].value = 2
+}
+
 function keyboardListener(event, size) {
-  // return error here, reset game with message
-  // if (!emptyCell) return null
-  // Prevent default action for arrow keys to avoid scrolling or other browser behaviors
   if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
     event.preventDefault()
-    const calculatedGrid = calculateValues(event.key, size, grid.value)
-    lastGrid.value = grid.value
-    grid.value = calculatedGrid
-    const emptyCell = getRandomEmptyCell(grid.value)
-    grid.value[emptyCell.row][emptyCell.col].value = 2
+    refillGrid(event.key, size, grid.value)
   }
 
   const isCtrlOrCmd = event.ctrlKey || event.metaKey
@@ -28,10 +29,15 @@ function keyboardListener(event, size) {
   }
 }
 
-function handleClick() {
-  const newGrid = createGrid(size)
-  grid.value = newGrid
-  lastGrid.value = newGrid
+function handleClick(event) {
+  console.log('event...', event)
+  if (event === 'reset') {
+    const newGrid = createGrid(size)
+    grid.value = newGrid
+    lastGrid.value = newGrid
+  } else {
+    refillGrid(event, size, grid.value)
+  }
 }
 
 onMounted(() => {
@@ -65,25 +71,42 @@ onBeforeUnmount(() => {
     </div>
     <div class="mt-8">
       <button
-        @click="handleClick"
+        @click="handleClick('reset')"
         class="py-2 px-8 m-4 border-2 rounded-full text-xl flex items-center cursor-pointer bg-gray-100 transition duration-400 hover:drop-shadow-lg/30"
       >
         Reset
       </button>
     </div>
     <div class="mt-8 text-xl flex flex-col items-center justify-center">
-      <div class="flex py-2">
-        Use Arrow keys &nbsp;
-        <Svg value="M15.75 19.5 8.25 12l7.5-7.5" />
-        &nbsp;
-        <Svg value="m8.25 4.5 7.5 7.5-7.5 7.5" />
-        &nbsp;
-        <Svg value="m4.5 15.75 7.5-7.5 7.5 7.5" />
-        &nbsp;
-        <Svg value="m19.5 8.25-7.5 7.5-7.5-7.5" />
+      <div class="flex py-2 flex-col items-center">
+        <div class="xl:hidden flex flex-col w-[12rem]">
+          <div class="flex w-full">
+            <div class="w-1/3"></div>
+            <div class="w-1/3 flex justify-center" @click="handleClick('ArrowUp')">
+              <Svg value="m4.5 15.75 7.5-7.5 7.5 7.5"></Svg>
+            </div>
+            <div></div>
+          </div>
+          <div class="flex w-full">
+            <div class="w-1/3 flex justify-center" @click="handleClick('ArrowLeft')">
+              <Svg value="M15.75 19.5 8.25 12l7.5-7.5"></Svg>
+            </div>
+            <div class="w-1/3"></div>
+            <div class="w-1/3 flex justify-center" @click="handleClick('ArrowRight')">
+              <Svg value="m8.25 4.5 7.5 7.5-7.5 7.5"></Svg>
+            </div>
+          </div>
+          <div class="flex w-full">
+            <div class="w-1/3"></div>
+            <div class="w-1/3 flex justify-center" @click="handleClick('ArrowDown')">
+              <Svg value="m19.5 8.25-7.5 7.5-7.5-7.5"></Svg>
+            </div>
+            <div class="w-1/3"></div>
+          </div>
+        </div>
       </div>
 
-      <div>
+      <div class="hidden xl:block">
         <span class="bg-gray-100 border-slate-300 border-2 rounded-lg px-2">ctrl + z</span>
         to undo once
       </div>

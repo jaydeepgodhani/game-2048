@@ -19,7 +19,7 @@ export function createGrid(size) {
       row,
       col,
       id: row * size + col + 1,
-      value: 0,
+      value: testGrid4[row][col],
     })),
   )
 }
