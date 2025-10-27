@@ -30,7 +30,6 @@ function keyboardListener(event, size) {
 }
 
 function handleClick(event) {
-  console.log('event...', event)
   if (event === 'reset') {
     const newGrid = createGrid(size)
     grid.value = newGrid
