@@ -12,7 +12,7 @@ function refillGrid(event, size, gridValue) {
   const calculatedGrid = calculateValues(event, size, gridValue)
   lastGrid.value = gridValue
   grid.value = calculatedGrid
-  const emptyCell = getRandomEmptyCell(gridValue)
+  const emptyCell = getRandomEmptyCell(calculatedGrid)
   grid.value[emptyCell.row][emptyCell.col].value = 2
 }
 
