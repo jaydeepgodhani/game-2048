@@ -71,7 +71,7 @@ onBeforeUnmount(() => {
     <div class="mt-8">
       <button
         @click="handleClick('reset')"
-        class="py-2 px-8 m-4 border-2 rounded-full text-xl flex items-center cursor-pointer bg-gray-100 transition duration-400 hover:drop-shadow-lg/30"
+        class="py-2 px-8 m-4 border-2 rounded-full text-xl flex items-center cursor-pointer bg-white transition duration-400 hover:drop-shadow-lg/30 hover:bg-blue-200"
       >
         Reset
       </button>
